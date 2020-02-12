@@ -7,9 +7,14 @@ import { NavController, IonicPage } from 'ionic-angular';
   templateUrl: 'home.html'//qual arquivo html ele esta controlando
 })
 export class HomePage {
-
+  /*No angular se vc declarar um componente no construtor da classe ela é injetada automaticamente.
+  NavController permite vc navegar de uma pagina p outra. */
   constructor (public navCtrl: NavController) {
 
+  }
+  /*No typescript a classe, atributo, metodo tem q ser acessado precedido do this */
+  login() {
+    this.navCtrl.setRoot('CategoriasPage');//abre a page Categorias.html. CategoriasPage é o controlador de Categorias.html
   }
 
 }
