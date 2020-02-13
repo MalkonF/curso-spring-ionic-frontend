@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CategoriaService } from '../services/domain/categoria.service';
 import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
+import { AuthService } from '../services/auth.service';
 
 //Decorator - anotacao q começa com @  q vai ter configuracoes p alterar a classe. O que faz a classe 
 //ser um modulo é o @NgModule
@@ -26,7 +27,8 @@ import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     CategoriaService,
-    ErrorInterceptorProvider
+    ErrorInterceptorProvider,
+    AuthService
   ]
 })
 export class AppModule { } // diz q AppModule pode ser usado p outras app

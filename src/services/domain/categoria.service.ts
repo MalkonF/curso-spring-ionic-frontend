@@ -13,6 +13,6 @@ export class CategoriaService {
     categorias. No angular uma req http é assíncrona e n retorna o objeto, ela retorna Observable
     pq o angular encapsula esse mecanismo de requisicao assincrona por meio desse objeto. */
     findAll() : Observable<CategoriaDTO[]>  {//crase permite colocar valor da variavel
-        return this.http.get<CategoriaDTO[]>(`${API_CONFIG.baseUrl}/categoriass`);
+        return this.http.get<CategoriaDTO[]>(`${API_CONFIG.baseUrl}/categorias`);
     }
 }

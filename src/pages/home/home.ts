@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, IonicPage } from 'ionic-angular';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
 import { CredenciaisDTO } from '../../models/credenciais.dto';
+import { AuthService } from '../../services/auth.service';
 //vai conf a app p q essa classe seja uma pagina e vou poder referenciar o nome dela entre aspas(string)
 @IonicPage()
 @Component({
@@ -10,14 +11,14 @@ import { CredenciaisDTO } from '../../models/credenciais.dto';
 })
 export class HomePage {
   /*Instancia um objeto. Faz o bind desse objeto com o valor dos campos no home.html */
-  creds : CredenciaisDTO = {
+  creds: CredenciaisDTO = {
     email: "",
     senha: ""
   };
 
   /*No angular se vc declarar um componente no construtor da classe ela é injetada automaticamente.
   NavController permite vc navegar de uma pagina p outra. */
-  constructor (public navCtrl: NavController, public menu: MenuController) {
+  constructor (public navCtrl: NavController, public menu: MenuController, public auth: AuthService) {
 
   }/*Desabilita o menu qnd entra na pagina. ionViewWill..faz parte do lifecycle do ionic */
   ionViewWillEnter() {
@@ -31,9 +32,12 @@ export class HomePage {
 
   /*No typescript a classe, atributo, metodo tem q ser acessado precedido do this */
   login() {
-    console.log(this.creds);
-    this.navCtrl.setRoot('CategoriasPage');//abre a page Categorias.html. CategoriasPage é o controlador de Categorias.html
+    this.auth.authenticate(this.creds)
+      .subscribe(response => {//inscreve p receber a resposta
+        console.log(response.headers.get('Authorization'));//se tiver sucesso
+        this.navCtrl.setRoot('CategoriasPage');//abre a page Categorias.html. CategoriasPage é o controlador de Categorias.html
+      },
+        error => { });//se tiver erro
   }
-
 }
 /*Este é o controlador da home.html. o @Component é o que faz ele ser o controlador. */
