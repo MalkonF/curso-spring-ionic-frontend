@@ -9,5 +9,15 @@
 </ion-header>
 
 <ion-content padding>
-  <p>Página de categorias</p>
+  <ion-list>
+    <!--ngfor le uma coleção do controlador e repetir o elemento q ela esta(button) de acordo 
+  com o numero de elementos daquela coleção-->
+    <button ion-item *ngFor="let item of items">
+      <ion-thumbnail item-start>
+        <img src="{{bucketUrl}}/cat{{item.id}}.jpg">
+      </ion-thumbnail>
+      <h2> {{ item.nome }} </h2>
+      <!--Interpolação entre duas {{}}-->
+    </button>
+  </ion-list>
 </ion-content>
