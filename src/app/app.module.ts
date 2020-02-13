@@ -1,25 +1,30 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { CategoriaService } from '../services/domain/categoria.service';
+
 //Decorator - anotacao q começa com @  q vai ter configuracoes p alterar a classe. O que faz a classe 
 //ser um modulo é o @NgModule
 @NgModule({
   //componentes ou paginas q faz parte do modulo e que serao carregados qnd o modulo principal for carregado
   declarations: [MyApp],
-  //modulos q serao usados
-  imports: [BrowserModule, IonicModule.forRoot(MyApp)],
+  //modulos q serao usados.Se o modulo for injetado no modulo principal(aqui) ele fica disponivel na app toda
+  imports: [BrowserModule, HttpClientModule, IonicModule.forRoot(MyApp)],
   //como a app vai inciiar
   bootstrap: [IonicApp],
   //qnd no declaratio for uma pagina(n apenas um componente) a mesma coisa q vc declarar no declaration tem q ser declarada no entry componentes
   entryComponents: [MyApp],
-  //modulos q usarao a mesma instancia
+  /*modulos q usarao a mesma instancia. como n precisa de um serviço p cada pagina e ele pode ser 
+  usado por mais de uma pagina, é melhor registrar aqui p ficar disponivel p app toda*/
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    CategoriaService
   ]
 })
 export class AppModule { } // diz q AppModule pode ser usado p outras app
