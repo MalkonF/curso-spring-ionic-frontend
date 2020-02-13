@@ -30,8 +30,9 @@ export class CategoriasPage {
       .subscribe(response => {
         this.items = response;
       },
-        error => {
-          console.log(error);
+        error => {/*O interceptor retorna somente a propagação do erro que vai. Tem que deixar esse error
+          p q a exceção n estoure no controlador */
+         
         });
   }
 
