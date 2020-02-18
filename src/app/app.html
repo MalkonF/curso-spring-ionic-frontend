@@ -6,7 +6,8 @@
   </ion-header>
 
   <ion-content>
-    <ion-list>
+    <ion-list><!--P cada page na lista de paginas, vai criar um botao no menu com titulo e caso o botao seja 
+    pressionado ele chama o openPage passando o p como arg-->
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
