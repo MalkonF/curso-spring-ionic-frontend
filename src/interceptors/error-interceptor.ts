@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 import { StorageService } from '../services/storage.service';
+import { AlertController } from 'ionic-angular';
+
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-    constructor(public storage: StorageService) {
+    constructor (public storage: StorageService, public alertCtrl: AlertController) {
     }
 
     /*Implementação do metodo intercept da interface HttpInterceptor. O metodo intercepta qualquer requisição
@@ -27,10 +29,17 @@ export class ErrorInterceptor implements HttpInterceptor {
                 console.log("Erro detectado pelo interceptor:");
                 console.log(errorObj);
 
-                switch(errorObj.status) {
+                switch (errorObj.status) {
+                    case 401:
+                        this.handle401();//erro autenticação
+                        break;
+
                     case 403: //caso o erro seja 403(acesso n autorizado)
-                    this.handle403();
-                    break;
+                        this.handle403();
+                        break;
+
+                        default:
+                            this.handleDefaultEror(errorObj);
                 }
 
                 return Observable.throw(errorObj);//retorna so a parte do erro do backend. Na vdd ele propaga o erro
@@ -38,6 +47,34 @@ export class ErrorInterceptor implements HttpInterceptor {
     }
     handle403() {
         this.storage.setLocalUser(null);//força a limpeza do localStorage. Pq um possivel localUser q esta no storage ta invalido pq acabou tempo de validade token
+    }
+
+    handle401() {//cria um obj do Alert
+        let alert = this.alertCtrl.create({
+            title: 'Erro 401: falha de autenticação',
+            message: 'Email ou senha incorretos',
+            enableBackdropDismiss: false,
+            buttons: [
+                {
+                    text: 'Ok'
+                }
+            ]
+        });
+        alert.present();
+    }
+
+    handleDefaultEror(errorObj) {
+        let alert = this.alertCtrl.create({
+            title: 'Erro ' + errorObj.status + ': ' + errorObj.error,
+            message: errorObj.message,
+            enableBackdropDismiss: false, //p sair do alert tem q apertar botao no alert e n fora
+            buttons: [
+                {
+                    text: 'Ok' //botao
+                }
+            ]
+        });
+        alert.present();//mostra o alert
     }
 }
 /*Como o interceptor vai ser instanciado? Aqui é uma exigencia do angular p o interceptor ser criado */
