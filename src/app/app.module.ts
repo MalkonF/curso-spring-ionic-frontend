@@ -10,6 +10,7 @@ import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { ClienteService } from '../services/domain/cliente.service';
+import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
 
 //Decorator - anotacao q começa com @  q vai ter configuracoes p alterar a classe. O que faz a classe 
 //ser um modulo é o @NgModule
@@ -29,6 +30,7 @@ import { ClienteService } from '../services/domain/cliente.service';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     CategoriaService,
+    AuthInterceptorProvider,//colocar cabeçalho na requisicao tem q ser feito antes de tratamento de erro, por isso esse modulo tem q ser registrado antes do de erro
     ErrorInterceptorProvider,
     AuthService,
     StorageService,

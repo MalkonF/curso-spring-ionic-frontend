@@ -10,15 +10,10 @@ export class ClienteService {
 
     constructor (public http: HttpClient, public storage: StorageService) {
     }
-    //recebe email como arg e retorna tipo observable
+    //recebe email como arg e retorna tipo observable. Endpoint q busca por email
     findByEmail(email: string): Observable<ClienteDTO> {
+        return this.http.get<ClienteDTO>(`${API_CONFIG.baseUrl}/clientes/email?value=${email}`);
 
-        let token = this.storage.getLocalUser().token;
-        let authHeader = new HttpHeaders({ 'Authorization': 'Bearer ' + token });
-
-        return this.http.get<ClienteDTO>(
-            `${API_CONFIG.baseUrl}/clientes/email?value=${email}`, //endpoint q busca por email
-            { 'headers': authHeader });//inclui o cabeçalho authorization na requisição
     }
     //any é o tipo do typescript q aceita qualquer coisa
     getImageFromBucket(id: string): Observable<any> {
