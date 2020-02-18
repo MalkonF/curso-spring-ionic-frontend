@@ -48,5 +48,8 @@ export class HomePage {
       },
         error => { });//se tiver erro
   }
+  signup() {
+    this.navCtrl.push('SignupPage');
+  }
 }
 /*Este é o controlador da home.html. o @Component é o que faz ele ser o controlador. */
