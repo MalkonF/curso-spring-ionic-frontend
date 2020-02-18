@@ -28,6 +28,15 @@ export class HomePage {
   ionViewDidLeave() {
     this.menu.swipeEnable(true);
   }
+  /*Qnd o user entra no home, o token é renovado e gravado no localStorage */
+  ionViewDidEnter() {
+    this.auth.refreshToken()
+      .subscribe(response => {
+        this.auth.successfulLogin(response.headers.get('Authorization'));
+        this.navCtrl.setRoot('CategoriasPage');
+      },
+        error => { });
+  }
 
 
   /*No typescript a classe, atributo, metodo tem q ser acessado precedido do this */

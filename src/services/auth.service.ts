@@ -24,6 +24,15 @@ export class AuthService {
                 Ai tenho q colocar q ele é texto p evitar q o framework faça parse, pq todo codigo json faz parte p texto*/
             });
     }
+    refreshToken() {
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/auth/refresh_token`,
+            {},
+            {
+                observe: 'response',
+                responseType: 'text'
+            });
+    }
 
     successfulLogin(authorizationValue: string) {
         let tok = authorizationValue.substring(7);//pega o token sem a palavra bearer
