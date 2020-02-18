@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
+import { StorageService } from '../services/storage.service';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
+
+    constructor(public storage: StorageService) {
+    }
+
     /*Implementação do metodo intercept da interface HttpInterceptor. O metodo intercepta qualquer requisição
     para a app e  */
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -22,8 +27,17 @@ export class ErrorInterceptor implements HttpInterceptor {
                 console.log("Erro detectado pelo interceptor:");
                 console.log(errorObj);
 
+                switch(errorObj.status) {
+                    case 403: //caso o erro seja 403(acesso n autorizado)
+                    this.handle403();
+                    break;
+                }
+
                 return Observable.throw(errorObj);//retorna so a parte do erro do backend. Na vdd ele propaga o erro
             }) as any;
+    }
+    handle403() {
+        this.storage.setLocalUser(null);//força a limpeza do localStorage. Pq um possivel localUser q esta no storage ta invalido pq acabou tempo de validade token
     }
 }
 /*Como o interceptor vai ser instanciado? Aqui é uma exigencia do angular p o interceptor ser criado */
