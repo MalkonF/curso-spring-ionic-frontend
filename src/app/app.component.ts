@@ -40,7 +40,8 @@ export class MyApp {
       this.splashScreen.hide();
     });
   }
-  /*Qnd o openPage for chamado e o obj p for o objeto de logout, executa o logout */
+  /*Qnd o openPage for chamado e o obj p for o objeto de logout, executa o logout.
+   */
   openPage(page: { title: string, component: string }) {//e necessario definir esses atributo p acessar atributos da page
     switch (page.title) {
       case 'Logout':

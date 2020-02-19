@@ -7,7 +7,9 @@
 
   <ion-content>
     <ion-list><!--P cada page na lista de paginas, vai criar um botao no menu com titulo e caso o botao seja 
-    pressionado ele chama o openPage passando o p como arg-->
+     pressionado ele chama o openPage passando o p como arg.
+     openPage é chamado no .html do app. 
+     Ele gera as opções do menu fazendo um ngFor, e ai ele faz um bind de evento com o metodo openPage.-->
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>

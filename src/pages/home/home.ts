@@ -38,7 +38,6 @@ export class HomePage {
         error => { });
   }
 
-
   /*No typescript a classe, atributo, metodo tem q ser acessado precedido do this */
   login() {
     this.auth.authenticate(this.creds)
