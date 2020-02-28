@@ -34,9 +34,10 @@ export class CategoriasPage {
           p q a exceção n estoure no controlador */
 
         });
-  }
-  showProdutos() {
-    this.navCtrl.push('ProdutosPage');
+  }/*Passa parametro da pagina categoria para pagina de produtos. primeiro categoria_id é o nome do atributo
+  e o segundo é o valor do atributo q é o dado q chega como parametro no metodo showProdutos */
+  showProdutos(categoria_id: string) {
+    this.navCtrl.push('ProdutosPage', { categoria_id: categoria_id });
   }
 
 }
