@@ -32,8 +32,11 @@ export class CategoriasPage {
       },
         error => {/*O interceptor retorna somente a propagação do erro que vai. Tem que deixar esse error
           p q a exceção n estoure no controlador */
-         
+
         });
+  }
+  showProdutos() {
+    this.navCtrl.push('ProdutosPage');
   }
 
 }
