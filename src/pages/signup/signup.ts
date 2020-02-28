@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { EstadoService } from '../../services/domain/estado.service';
 import { CidadeService } from '../../services/domain/cidade.service';
 import { EstadoDTO } from '../../models/estado.dto';
 import { CidadeDTO } from '../../models/cidade.dto';
+import { ClienteService } from '../../services/domain/cliente.service';
 
 
 @IonicPage()
@@ -24,7 +25,9 @@ export class SignupPage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public cidadeService: CidadeService,
-    public estadoService: EstadoService) {
+    public estadoService: EstadoService,
+    public clienteService: ClienteService,
+    public alertCtrl: AlertController) {
     /*instancia formGroup. nome, email sao os mesmos nomes la no formulario. Esses nomes sao so p testes
     numa app real deixar vazio*/
     this.formGroup = this.formBuilder.group({
@@ -65,9 +68,30 @@ export class SignupPage {
       },
         error => { });
   }
-
+  /*formGroup tem os dados da inscrição */
   signupUser() {
-    console.log("enviou o form");
+    this.clienteService.insert(this.formGroup.value)
+      .subscribe(response => {
+        this.showInsertOk();
+      },
+        error => { });
+  }
+  //mostra mensagem de sucesso
+  showInsertOk() {
+    let alert = this.alertCtrl.create({
+      title: 'Sucesso!',
+      message: 'Cadastro efetuado com sucesso',
+      enableBackdropDismiss: false, //so pode sair do alert apertando no butao
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {//qd aperta no ok desempilha a pagina pq o form de cadastro foi empilhado na pagina de login. handler uma função anonima
+            this.navCtrl.pop();
+          }
+        }
+      ]
+    });
+    alert.present();//mostra o alert
   }
 }
 /*Todas validacoes sintaticas ou validacoes q n tem q ir no bd, a validação vai ser feita

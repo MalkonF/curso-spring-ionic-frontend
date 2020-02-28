@@ -3,6 +3,7 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS
 import { Observable } from 'rxjs/Rx';
 import { StorageService } from '../services/storage.service';
 import { AlertController } from 'ionic-angular';
+import { FieldMessage } from '../models/fieldmessage';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -38,8 +39,12 @@ export class ErrorInterceptor implements HttpInterceptor {
                         this.handle403();
                         break;
 
-                        default:
-                            this.handleDefaultEror(errorObj);
+                    case 422: //erro de validação
+                        this.handle422(errorObj);
+                        break;
+
+                    default:
+                        this.handleDefaultEror(errorObj);
                 }
 
                 return Observable.throw(errorObj);//retorna so a parte do erro do backend. Na vdd ele propaga o erro
@@ -63,6 +68,20 @@ export class ErrorInterceptor implements HttpInterceptor {
         alert.present();
     }
 
+    handle422(errorObj) {
+        let alert = this.alertCtrl.create({
+            title: 'Erro 422: Validação',
+            message: this.listErrors(errorObj.errors),//lista cada um dos erros
+            enableBackdropDismiss: false,
+            buttons: [
+                {
+                    text: 'Ok'
+                }
+            ]
+        });
+        alert.present();
+    }
+
     handleDefaultEror(errorObj) {
         let alert = this.alertCtrl.create({
             title: 'Erro ' + errorObj.status + ': ' + errorObj.error,
@@ -75,6 +94,14 @@ export class ErrorInterceptor implements HttpInterceptor {
             ]
         });
         alert.present();//mostra o alert
+    }
+    //estrutura as mensagens de erro q foi recebida do backend
+    private listErrors(messages: FieldMessage[]): string {
+        let s: string = '';
+        for (var i = 0; i < messages.length; i++) {
+            s = s + '<p><strong>' + messages[i].fieldName + "</strong>: " + messages[i].message + '</p>';
+        }
+        return s;
     }
 }
 /*Como o interceptor vai ser instanciado? Aqui é uma exigencia do angular p o interceptor ser criado */
