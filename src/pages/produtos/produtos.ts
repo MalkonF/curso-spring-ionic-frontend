@@ -27,13 +27,16 @@ export class ProdutosPage {
   }
   //percorre a lista de produtos
   loadImageUrls() {
-    for (var i=0; i<this.items.length; i++) {
+    for (var i = 0; i < this.items.length; i++) {
       let item = this.items[i];
       this.produtoService.getSmallImageFromBucket(item.id)
         .subscribe(response => {//se a img existir seta o campo imageUrl do dto do produto. La na page de produtos tem uma condicao se a variavel n tiver setada pega img padrao
           item.imageUrl = `${API_CONFIG.bucketBaseUrl}/prod${item.id}-small.jpg`;
         },
-        error => {});
+          error => { });
     }
-  }  
+  }
+  showDetail() {
+    this.navCtrl.push('ProdutoDetailPage');
+  }
 }
