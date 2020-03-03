@@ -12,6 +12,7 @@ import { StorageService } from '../services/storage.service';
 import { ClienteService } from '../services/domain/cliente.service';
 import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
 import { ProdutoService } from '../services/domain/produto.service';
+import { CartService } from '../services/domain/cart.service';
 
 //Decorator - anotacao q começa com @  q vai ter configuracoes p alterar a classe. O que faz a classe 
 //ser um modulo é o @NgModule
@@ -36,7 +37,8 @@ import { ProdutoService } from '../services/domain/produto.service';
     AuthService,
     StorageService,
     ClienteService,
-    ProdutoService
+    ProdutoService,
+    CartService
   ]
 })
 export class AppModule { } // diz q AppModule pode ser usado p outras app
