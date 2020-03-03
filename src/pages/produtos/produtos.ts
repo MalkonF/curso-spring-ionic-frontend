@@ -36,7 +36,7 @@ export class ProdutosPage {
           error => { });
     }
   }
-  showDetail() {
-    this.navCtrl.push('ProdutoDetailPage');
+  showDetail(produto_id: string) {//na chamada da outra pagina(produto detail) passa o produto id p outra page
+    this.navCtrl.push('ProdutoDetailPage', { produto_id: produto_id });
   }
 }
