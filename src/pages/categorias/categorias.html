@@ -9,10 +9,16 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-fab top right edge>
+    <button navPush="CartPage" ion-fab mini>
+      <ion-icon name="cart"></ion-icon>
+    </button>
+  </ion-fab>
   <ion-list>
     <!--ngfor le uma coleção do controlador e repetir o elemento q ela esta(button) de acordo 
   com o numero de elementos daquela coleção-->
-    <button ion-item *ngFor="let item of items" (click)="showProdutos(item.id)"><!--mostra os produtos de cd categoria-->
+    <button ion-item *ngFor="let item of items" (click)="showProdutos(item.id)">
+      <!--mostra os produtos de cd categoria-->
       <ion-thumbnail item-start>
         <img src="{{bucketUrl}}/cat{{item.id}}.jpg">
       </ion-thumbnail>

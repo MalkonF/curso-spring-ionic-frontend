@@ -22,11 +22,12 @@ export class MyApp {
   ) {
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
+    // aqui aparece as entradas do menu(canto superior esquerdo)
     this.pages = [
       { title: 'Home', component: 'HomePage' },
       { title: 'Profile', component: 'ProfilePage' },
       { title: 'Categorias', component: 'CategoriasPage' },
+      { title: 'Carrinho', component: 'CartPage' },
       { title: 'Logout', component: '' }//aki fica sem component pq ele vai ser implementado no met openPage
     ];
 
