@@ -51,11 +51,14 @@ export class CartPage {
     this.items = this.cartService.decreaseQuantity(produto).items;
   }
 
-  total() : number {
+  total(): number {
     return this.cartService.total();
-  }  
+  }
   //continuar comprando
   goOn() {
     this.navCtrl.setRoot('CategoriasPage');
+  }
+  checkout() {
+    this.navCtrl.push('PickAddressPage');
   }
 }
