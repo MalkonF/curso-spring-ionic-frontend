@@ -11,8 +11,8 @@
   <ion-list>
     <ion-list-header>
       Selecione um endereço
-    </ion-list-header>
-    <button ion-item *ngFor="let item of items">
+    </ion-list-header><!--exibe a lista de endereços q o cliente tem cadastrado. Ele vai ter q selecionar 1. item é o endereço q vai ser passado p o metodo-->
+    <button ion-item *ngFor="let item of items" (click)="nextPage(item)">
       <h2>{{item.logradouro}}, {{item.numero}}</h2>
       <p>{{item.complemento}} {{item.bairro}} CEP {{item.cep}}</p>
       <p>{{item.cidade.nome}}, {{item.cidade.estado.nome}}</p>
