@@ -25,16 +25,15 @@ export class ProfilePage {
     let localUser = this.storage.getLocalUser();
     if (localUser && localUser.email) {//localUser possui campo email?
       this.clienteService.findByEmail(localUser.email).
-        subscribe(response => {/*Faz a requisição e se inscreve p receber uma reposta.Se receber sucesso na resposta
-        acontece abaixo, senao error =>*/
-          this.cliente = response;
+        subscribe(response => {/*Faz a requisição e se inscreve p receber uma reposta.Se receber sucesso na resposta acontece abaixo, senao error =>*/
+          this.cliente = response as ClienteDTO;//faz casting p ClienteDTO. Força modelar a resposta p DTO pq cliente foi declarado como clienteDTO 
           this.getImageIfExists();
         },
-          error => { 
+          error => {
             if (error.status == 403) {
-            this.navCtrl.setRoot('HomePage');
-          }
-        });
+              this.navCtrl.setRoot('HomePage');
+            }
+          });
     }
     else {
       this.navCtrl.setRoot('HomePage');//else do primeio if, caso ocorra algum problema na hora de obter localuser

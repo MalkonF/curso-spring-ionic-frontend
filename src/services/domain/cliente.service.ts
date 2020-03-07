@@ -10,9 +10,9 @@ export class ClienteService {
 
     constructor (public http: HttpClient, public storage: StorageService) {
     }
-    //recebe email como arg e retorna tipo observable. Endpoint q busca por email
-    findByEmail(email: string): Observable<ClienteDTO> {
-        return this.http.get<ClienteDTO>(`${API_CONFIG.baseUrl}/clientes/email?value=${email}`);
+    //recebe email como arg retorna objeto cliente inteiro c tds atributos.Endpoint q busca por email
+    findByEmail(email: string) {
+        return this.http.get(`${API_CONFIG.baseUrl}/clientes/email?value=${email}`);
 
     }
     //any é o tipo do typescript q aceita qualquer coisa
@@ -21,14 +21,14 @@ export class ClienteService {
         return this.http.get(url, { responseType: 'blob' });//faz requisição falando q a resposta vai ser um blob, uma imagem e n um JSON
     }
     //faz um post no endpoint clientes passando obj e espera uma resposta do tipo texto(pq o corpo vem vazio p evitar erro de parse de JSON)
-    insert(obj : ClienteDTO) {
+    insert(obj: ClienteDTO) {
         return this.http.post(
-            `${API_CONFIG.baseUrl}/clientes`, 
+            `${API_CONFIG.baseUrl}/clientes`,
             obj,
-            { 
-                observe: 'response', 
+            {
+                observe: 'response',
                 responseType: 'text'
             }
-        ); 
+        );
     }
 }
