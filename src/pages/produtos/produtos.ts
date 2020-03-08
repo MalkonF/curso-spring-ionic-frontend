@@ -17,6 +17,9 @@ export class ProdutosPage {
   }
 
   ionViewDidLoad() {
+    this.loadData();
+  }
+  loadData() {
     let categoria_id = this.navParams.get('categoria_id');//pega o parametro q a categoria passou p page produtos
     let loader = this.presentLoading();//lugar ideal p chamar o loading é onde vc acha q a requisição vai demorar
     this.produtoService.findByCategoria(categoria_id)
@@ -48,5 +51,12 @@ export class ProdutosPage {
     });
     loader.present();
     return loader;//retorna o load instanciado pq depois tem q ter acesso a este objeto p fecha o loading
+  }
+  //faz uma chamada assincrona c setTimeout p executar o loadData e mostrar o desenho do carregamento
+  doRefresh(refresher) {
+    this.loadData();//chama a requisição q busca os produtos
+    setTimeout(() => {
+      refresher.complete();
+    }, 1000);
   }
 }
