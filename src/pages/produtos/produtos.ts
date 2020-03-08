@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ProdutoDTO } from '../../models/produto.dto';
 import { API_CONFIG } from '../../config/api.config';
 import { ProdutoService } from '../../services/domain/produto.service';
@@ -13,17 +13,19 @@ export class ProdutosPage {
 
   items: ProdutoDTO[];
 
-  constructor (public navCtrl: NavController, public navParams: NavParams, public produtoService: ProdutoService) {
+  constructor (public navCtrl: NavController, public navParams: NavParams, public produtoService: ProdutoService, public loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
     let categoria_id = this.navParams.get('categoria_id');//pega o parametro q a categoria passou p page produtos
+    let loader = this.presentLoading();//lugar ideal p chamar o loading é onde vc acha q a requisição vai demorar
     this.produtoService.findByCategoria(categoria_id)
       .subscribe(response => {
         this.items = response['content'];//recebe os produtos q veio na resposta. Como o endpoint é paginado o atributo content tem os dados dos produtos
+        loader.dismiss();//fecha a janela de loading depois q a resposta chegar
         this.loadImageUrls();//depois q chegar os produtos chama carregamento de imagem
       },
-        error => { });//se der erro n faz nada
+        error => { loader.dismiss(); });//se der erro tb cancela a janela do loading
   }
   //percorre a lista de produtos
   loadImageUrls() {
@@ -38,5 +40,13 @@ export class ProdutosPage {
   }
   showDetail(produto_id: string) {//na chamada da outra pagina(produto detail) passa o produto id p outra page
     this.navCtrl.push('ProdutoDetailPage', { produto_id: produto_id });
+  }
+
+  presentLoading() {
+    let loader = this.loadingCtrl.create({
+      content: "Aguarde..."
+    });
+    loader.present();
+    return loader;//retorna o load instanciado pq depois tem q ter acesso a este objeto p fecha o loading
   }
 }
