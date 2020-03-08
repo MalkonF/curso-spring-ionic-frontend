@@ -11,7 +11,8 @@ import { ProdutoService } from '../../services/domain/produto.service';
 })
 export class ProdutosPage {
 
-  items: ProdutoDTO[];
+  items: ProdutoDTO[] = [];//inicia c a lista vazia pq toda vez q carregar a page vai concatenar c a lista d prod ja existente
+  page: number = 0;
 
   constructor (public navCtrl: NavController, public navParams: NavParams, public produtoService: ProdutoService, public loadingCtrl: LoadingController) {
   }
@@ -22,17 +23,21 @@ export class ProdutosPage {
   loadData() {
     let categoria_id = this.navParams.get('categoria_id');//pega o parametro q a categoria passou p page produtos
     let loader = this.presentLoading();//lugar ideal p chamar o loading é onde vc acha q a requisição vai demorar
-    this.produtoService.findByCategoria(categoria_id)
+    this.produtoService.findByCategoria(categoria_id, this.page, 10)
       .subscribe(response => {
-        this.items = response['content'];//recebe os produtos q veio na resposta. Como o endpoint é paginado o atributo content tem os dados dos produtos
+        let start = this.items.length;
+        this.items = this.items.concat(response['content']);//recebe os produtos q veio na resposta. Como o endpoint é paginado o atributo content tem os dados dos produtos
+        let end = this.items.length - 1;//pega o tamanho da lista apos receber os produtos
         loader.dismiss();//fecha a janela de loading depois q a resposta chegar
-        this.loadImageUrls();//depois q chegar os produtos chama carregamento de imagem
+        console.log(this.page);
+        console.log(this.items);
+        this.loadImageUrls(start, end);//depois q chegar os produtos chama carregamento de imagem
       },
         error => { loader.dismiss(); });//se der erro tb cancela a janela do loading
   }
   //percorre a lista de produtos
-  loadImageUrls() {
-    for (var i = 0; i < this.items.length; i++) {
+  loadImageUrls(start: number, end: number) {
+    for (var i = start; i <= end; i++) {
       let item = this.items[i];
       this.produtoService.getSmallImageFromBucket(item.id)
         .subscribe(response => {//se a img existir seta o campo imageUrl do dto do produto. La na page de produtos tem uma condicao se a variavel n tiver setada pega img padrao
@@ -54,9 +59,18 @@ export class ProdutosPage {
   }
   //faz uma chamada assincrona c setTimeout p executar o loadData e mostrar o desenho do carregamento
   doRefresh(refresher) {
+    this.page = 0;
+    this.items = [];//zera a lista qnd da o refresher
     this.loadData();//chama a requisição q busca os produtos
     setTimeout(() => {
       refresher.complete();
+    }, 1000);
+  }//incrementa a page a buscar no backend, carrega os primeiros 10 produtos e mostra o efeito visual 1 segundo
+  doInfinite(infiniteScroll) {
+    this.page++;
+    this.loadData();
+    setTimeout(() => {
+      infiniteScroll.complete();
     }, 1000);
   }
 }

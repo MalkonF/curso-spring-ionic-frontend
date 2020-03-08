@@ -9,9 +9,9 @@ export class ProdutoService {
 
     constructor (public http: HttpClient) {
     }
-
-    findByCategoria(categoria_id: string) {
-        return this.http.get(`${API_CONFIG.baseUrl}/produtos/?categorias=${categoria_id}`);
+    /*P usar o infinity scroll o backend tem q prover a funcionalidade de paginação */
+    findByCategoria(categoria_id: string, page: number = 0, linesPerPage: number = 24) {
+        return this.http.get(`${API_CONFIG.baseUrl}/produtos/?categorias=${categoria_id}&page=${page}&linesPerPage=${linesPerPage}`);
     }
     //recebe o id e da um get do tipo produtoDTO no endpoint...
     findById(produto_id: string) {
