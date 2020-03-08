@@ -31,6 +31,7 @@ export class PaymentPage {
 
   nextPage() {
     this.pedido.pagamento = this.formGroup.value;//preenche o tipo de pagamento
-    console.log(this.pedido);
+    this.navCtrl.setRoot('OrderConfirmationPage', {pedido: this.pedido});//passa pedido p orderConfirmation
+    //aqui usa o setRoot e nao o push pq o push colocar setinha p voltar pq o pedido ja vai ter sido registrado
   }
 }

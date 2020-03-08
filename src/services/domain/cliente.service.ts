@@ -10,6 +10,10 @@ export class ClienteService {
 
     constructor (public http: HttpClient, public storage: StorageService) {
     }
+    //usa esse metodo para verifica se o cliente q está logado é o mesmo q está no pedido
+    findById(id: string) {
+        return this.http.get(`${API_CONFIG.baseUrl}/clientes/${id}`);
+    }
     //recebe email como arg retorna objeto cliente inteiro c tds atributos.Endpoint q busca por email
     findByEmail(email: string) {
         return this.http.get(`${API_CONFIG.baseUrl}/clientes/email?value=${email}`);
