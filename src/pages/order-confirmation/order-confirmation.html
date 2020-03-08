@@ -37,7 +37,8 @@
       Cliente
     </ion-card-header>
     <ion-item>
-      <h2>{{cliente?.nome}}</h2><!--op segura: os dados vao ser renderizados somente qnd eles existirem-->
+      <h2>{{cliente?.nome}}</h2>
+      <!--op segura: os dados vao ser renderizados somente qnd eles existirem-->
       <p>{{cliente?.email}}</p>
     </ion-item>
   </ion-card>
@@ -67,4 +68,6 @@
       <h3>Pagamento com boleto</h3>
     </ion-item>
   </ion-card>
+  <button ion-button block (click)="checkout()">Confirmar pedido</button>
+  <button ion-button block outline (click)="back()">Voltar</button>
 </ion-content>
