@@ -19,6 +19,7 @@ export class OrderConfirmationPage {
   cartItems: CartItem[];//p acomodar os itens do carrinho
   cliente: ClienteDTO;
   endereco: EnderecoDTO;
+  codpedido: string;
 
   constructor (
     public navCtrl: NavController,
@@ -54,17 +55,27 @@ export class OrderConfirmationPage {
   back() {
     this.navCtrl.setRoot('CartPage');
   }
+  
+  home() {
+    this.navCtrl.setRoot('CategoriasPage');
+  }
 
   checkout() {
     this.pedidoService.insert(this.pedido)
       .subscribe(response => {
         this.cartService.createOrClearCart();//ja q salvou o carrinho limpa o carrinho no localStorage
-        console.log(response.headers.get('location'));//se a resposta der certo é pq retornou a URI do novo recurso criado
+        this.codpedido = this.extractId(response.headers.get('location'));
+        //se a resposta der certo é pq retornou a URI do novo recurso criado
       },
         error => {
           if (error.status == 403) {//403 problema de autorização ou autenticação
             this.navCtrl.setRoot('HomePage');
           }
         });
+  }
+  //localiza na uri de retorno da criação do pedido so o numero do pedido
+  private extractId(location: string): string {
+    let position = location.lastIndexOf('/');//localiza a ultima barra no endereço
+    return location.substring(position + 1, location.length);
   }
 }
