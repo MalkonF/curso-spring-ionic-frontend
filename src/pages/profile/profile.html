@@ -12,8 +12,21 @@
     <!--Faz um bind de src pq ta entre colchetes. Quer dizer: src vai ser o campo imageUrl da classe
   cliente ou a imagem de avatar vazio. O ? significa operador de navegação segura: se a variavel ainda n esta preenchida
 n vai dar erro na pagina, so no momento q ela for preenchida no controlador ai sim o angular vai renderizar o valor dela.-->
-    <img class="circle" [src]="cliente?.imageUrl || 'assets/imgs/avatar-blank.png'">
+    <img class="circle" [src]="cliente?.imageUrl || 'assets/imgs/avatar-blank.png'" />
   </ion-avatar>
   <h2 text-center>{{cliente?.nome}}</h2>
   <p text-center>{{cliente?.email}}</p>
+  <ion-card>
+    <ion-card-header>
+      Enviar imagem de perfil
+    </ion-card-header>
+    <ion-item *ngIf="picture"><!--so mostra a imagem qnd a var picture tiver preenchida, ou seja, a var q tem o caminho da foto tirada-->
+      <img [src]="picture" />
+    </ion-item>
+    <ion-item>
+      <button ion-button block (click)="getCameraPicture()" [disabled]="cameraOn">
+        Camera
+      </button>
+    </ion-item>
+  </ion-card>
 </ion-content>
