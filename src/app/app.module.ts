@@ -14,6 +14,7 @@ import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
 import { ProdutoService } from '../services/domain/produto.service';
 import { CartService } from '../services/domain/cart.service';
 import { Camera } from '@ionic-native/camera';
+import { ImageUtilService } from '../services/image-util.service';
 
 //Decorator - anotacao q começa com @  q vai ter configuracoes p alterar a classe. O que faz a classe 
 //ser um modulo é o @NgModule
@@ -39,7 +40,8 @@ import { Camera } from '@ionic-native/camera';
     StorageService,
     ClienteService,
     ProdutoService,
-    CartService
+    CartService,
+    ImageUtilService
   ]
 })
 export class AppModule { } // diz q AppModule pode ser usado p outras app

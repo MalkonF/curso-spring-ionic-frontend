@@ -27,6 +27,9 @@ export class ProfilePage {
   }
 
   ionViewDidLoad() {//executar qnd a pagina for carregada
+    this.loadData();
+  }
+  loadData() {
     let localUser = this.storage.getLocalUser();
     if (localUser && localUser.email) {//localUser possui campo email?
       this.clienteService.findByEmail(localUser.email).
@@ -64,15 +67,27 @@ export class ProfilePage {
       encodingType: this.camera.EncodingType.PNG, //formato da imagem
       mediaType: this.camera.MediaType.PICTURE,
     }
-     
 
-   this.camera.getPicture(options).then((imageData) => {
-     this.picture = 'data:image/png;base64,' + imageData;//salva o caminho da imagem
-     this.cameraOn = false;//desabilita o botao qnd acionar p tirar foto 
-     console.log("Entrei");
+
+    this.camera.getPicture(options).then((imageData) => {
+      this.picture = 'data:image/png;base64,' + imageData;//salva o caminho da imagem
+      this.cameraOn = false;//desabilita o botao qnd acionar p tirar foto 
     }, (err) => {
       console.log(err);
     });
   }
-  
+  sendPicture() {
+    this.clienteService.uploadPicture(this.picture)
+      .subscribe(response => {
+        this.picture = null;
+        this.loadData();
+      },
+        error => {
+        });
+  }
+
+  cancel() {
+    this.picture = null;
+  }
+
 }

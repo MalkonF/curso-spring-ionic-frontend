@@ -4,16 +4,32 @@ import { Observable } from "rxjs/Rx";
 import { ClienteDTO } from "../../models/cliente.dto";
 import { API_CONFIG } from "../../config/api.config";
 import { StorageService } from "../storage.service";
+import { ImageUtilService } from "../image-util.service";
 
 @Injectable()
 export class ClienteService {
 
-    constructor (public http: HttpClient, public storage: StorageService) {
+    constructor (public http: HttpClient, public storage: StorageService, public imageUtilService: ImageUtilService) {
     }
     //usa esse metodo para verifica se o cliente q está logado é o mesmo q está no pedido
     findById(id: string) {
         return this.http.get(`${API_CONFIG.baseUrl}/clientes/${id}`);
     }
+    uploadPicture(picture) {
+        let pictureBlob = this.imageUtilService.dataUriToBlob(picture);//converte a img pra blob
+        let formData : FormData = new FormData();
+        formData.set('file', pictureBlob, 'file.png');//passa a img p formData formatar p enviar
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/clientes/picture`, 
+            formData,
+            { 
+                observe: 'response', 
+                responseType: 'text'
+            }
+        ); 
+    }
+    
+
     //recebe email como arg retorna objeto cliente inteiro c tds atributos.Endpoint q busca por email
     findByEmail(email: string) {
         return this.http.get(`${API_CONFIG.baseUrl}/clientes/email?value=${email}`);
