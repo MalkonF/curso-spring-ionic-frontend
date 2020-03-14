@@ -28,6 +28,7 @@ export class ProfilePage {
 
   ionViewDidLoad() {//executar qnd a pagina for carregada
     this.loadData();
+    this.getImageIfExists();
   }
   loadData() {
     let localUser = this.storage.getLocalUser();
