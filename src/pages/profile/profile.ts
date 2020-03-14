@@ -57,26 +57,43 @@ export class ProfilePage {
   }
 
   getCameraPicture() {
+    this.cameraOn = true;
+
+    const options: CameraOptions = {
+      quality: 100,
+
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.PNG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      this.picture = 'data:image/png;base64,' + imageData;
+      this.cameraOn = false;
+    }, (err) => {
+    });
+  }
+
+  getGalleryPicture() {
 
     this.cameraOn = true;
 
     const options: CameraOptions = {
-      targetWidth: 300,
-      targetHeight: 300,
       quality: 100,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.PNG, //formato da imagem
-      mediaType: this.camera.MediaType.PICTURE,
+      encodingType: this.camera.EncodingType.PNG,
+      mediaType: this.camera.MediaType.PICTURE
     }
 
-
     this.camera.getPicture(options).then((imageData) => {
-      this.picture = 'data:image/png;base64,' + imageData;//salva o caminho da imagem
-      this.cameraOn = false;//desabilita o botao qnd acionar p tirar foto 
+      this.picture = 'data:image/png;base64,' + imageData;
+      this.cameraOn = false;
     }, (err) => {
-      console.log(err);
     });
   }
+
+
   sendPicture() {
     this.clienteService.uploadPicture(this.picture)
       .subscribe(response => {
