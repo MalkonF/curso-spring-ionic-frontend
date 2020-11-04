@@ -4,7 +4,7 @@
 
 <p float="left">
 <kbd><img src="1.jpg" alt="Loja virtual" width="200"/></kbd>
-<kbd><img src="2.jpg" alt="Loja virtual" width="200"/><kbd>
+<kbd><img src="2.jpg" alt="Loja virtual" width="200"/></kbd>
 <kbd><img src="3.jpg" alt="Loja virtual" width="200"/></kbd>
 <kbd><img src="4.jpg" alt="Loja virtual" width="200"/></kbd>
 </p>
