@@ -2,6 +2,10 @@
 
 > Frontend de uma loja virtual. O backend referente a este projeto está localizado em: https://github.com/MalkonF/cursomc
 
+![](1.jpg)
+![](2.jpg)
+![](3.jpg)
+![](4.jpg)
 
 ## Tecnologias usadas no Projeto
 
@@ -11,8 +15,7 @@
 ![ionic]
 ![cordova]
 ![heroku]
-![sdk] 
-
+![sdk]
 
 ## Antes de utilizar
 
@@ -31,6 +34,7 @@ Instale o ionic e cordova pelo npm:
 ```
 npm install -g ionic@3.19.0 cordova@7.1.0
 ```
+
 Verifique as plataformas instaladas no seu projeto:
 
 ```
@@ -83,15 +87,11 @@ Pronto, a app já está rodando no seu smartphone.
 
 ## Baixar app no Google Play
 
-
-
-
 ## Onde me encontrar?
 
 - Twitter – [@RapazComum6](https://twitter.com/RapazComum6)
 - E-mail - malkon.inf@gmail.com
 - Linkedin - [Malkon Faria](https://www.linkedin.com/in/malkon-faria-1843b81a7/)
-
 
 [node]: https://img.shields.io/badge/node.js-v12.19.0-%232E8B57
 [npm]: https://img.shields.io/badge/npm-v6.14.8-%23B22222
