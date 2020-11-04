@@ -2,10 +2,10 @@
 
 > Frontend de uma loja virtual. O backend referente a este projeto está localizado em: https://github.com/MalkonF/cursomc
 
-![](1.jpg =100x20)
-![](2.jpg =100x20)
-![](3.jpg =100x20)
-![](4.jpg =100x20)
+<img src="1.jpg" alt="Loja virtual" width="200"/>
+<img src="2.jpg" alt="Loja virtual" width="200"/>
+<img src="3.jpg" alt="Loja virtual" width="200"/>
+<img src="4.jpg" alt="Loja virtual" width="200"/>
 
 ## Tecnologias usadas no Projeto
 
